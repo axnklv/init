@@ -1,0 +1,99 @@
+                        1. NETWORK
+
+1.  Get the list of names of the network interfaces of the machine: ifconfig -l
+
+2.  a) Broadcast address : networksetup -getinfo Ethernet
+    b) all IP : ping -c15 192.168.21.255 | grep from | awk '{print $4}' |
+                cut -d : -f1 | sort -u
+
+3.  MAC address : networksetup -getmacaddress Wi-Fi  | cut -c19-36
+
+4.  Default gateway in the routing table :
+    route get default | grep gateway | cut -c14-26
+
+5.  IP address of the DNS to slash16.org :
+    nslookup slash16.org | grep Server | cut -c10-21
+
+6.  Path to the file that contains the IP address of the DNS server
+you’re using : var/run/resolv.conf
+
+7.  External DNS server on the slash16.org domain name :
+    nslookup slash16.org 8.8.8.8
+
+8.  Provider of slash16.org : host slash16.org, whois IP -> Amazon
+
+9.  IP of 42.ft : nslookup 42.fr
+
+10. Network devices between your computer and the slash16.org :
+    traceroute slash16.org
+
+11. Последний локальный IP из 10 вопроса : 192.168.2.9
+
+12. IP that was assigned to you by dhcp server :
+    ipconfig getpacket en0 | grep yiaddr | cut -c10-23
+13. Find the name of your host : nslookup yiaddr
+
+14. What file contains the local DNS entries? : /etc/hosts
+
+15. Make the intra.42.fr address reroute to 46.19.122.85 :
+    echo "46.19.122.85 intra.42.fr" >> /etc/hosts
+
+                        2. SYSTEM
+
+1.  File with debian version : /etc/debian_version
+
+2.  Command to rename system : hostnamectl set-hostname "changed_name"
+
+3.  What file has to be modified to make it permanent? : /etc/hostname
+
+4.  What command gives you the time since your system was last booted? : uptime
+
+5.  Command that determines the state of the SSH service :
+    service ssh status
+
+6.  Command that reboots the SSH service : service ssh restart
+
+7.  The PID of the SSHD service : service sshd status
+
+8.  File contains the RSA keys of systems that are authorized to connect via SSH:
+    /etc/ssh/sshd_config
+
+9.  Who is connected to the System? : who / users
+
+10. Listing the partition tables of drives : fdisk -l
+
+11. The command that displays the available space left and used on the system:
+    df -h
+
+12. The exact size of each folder of /var : du -h /var/*
+
+13. The command that find, in real time, currently running processes :
+    ps aux / top
+
+14. Run the ‘tail -f /var/log/syslog‘ command in background :
+    tail -f /var/log/syslog‘ command in background &
+
+15. The command that kills the background command’s process :
+    kill "process name"
+
+16. Find the service which makes it possible to run specific tasks following
+    a regular schedule : cron
+
+17. The command that allows you to connect via ssh on the VM :
+    ssh elchrist@192.168.20.241 -p2200
+
+18. The command that kills ssh service : ssh stop / ssh kill
+
+19. List all services which are started at boot time and name this kind of
+    services : systemctl list-unit-files --state enabled
+
+20. List all existing users on the VM : less /etc/passwd | awk -F: '{print$1}'
+
+21. List all real users on the VM : less /etc/passwd
+
+22. The command that add a new local user : adduser
+
+23. How connect yourself as new user : ssh VM_name @ ip -port from VM settings
+    Графически - просто сделать смену пользователя
+
+24. The command that list all packages : dpkg -l
